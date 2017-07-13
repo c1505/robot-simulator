@@ -22,4 +22,25 @@ class Robot
     next_index = ORIENTATIONS.index(@bearing) - 1
     @bearing = ORIENTATIONS[next_index]
   end
+  
+  def at(x, y)
+    @coordinates = [x, y]
+  end
+  
+  def coordinates
+    @coordinates
+  end
+  
+  def advance
+    case @bearing
+    when :north
+      @coordinates[1] += 1
+    when :east
+      @coordinates[0] += 1
+    when :south
+      @coordinates[1] -= 1
+    when :west
+      @coordinates[0] -= 1
+    end
+  end
 end
