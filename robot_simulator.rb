@@ -1,13 +1,11 @@
 require 'pry'
 class Robot
+  attr_accessor :coordinates, :bearing
+  
   ORIENTATIONS = [:north, :east, :south, :west]
   def orient(direction)
     raise ArgumentError unless ORIENTATIONS.include?(direction) 
     @bearing = direction
-  end
-  
-  def bearing
-    @bearing
   end
   
   def turn_right
@@ -27,9 +25,6 @@ class Robot
     @coordinates = [x, y]
   end
   
-  def coordinates
-    @coordinates
-  end
   
   def advance
     case @bearing
@@ -44,3 +39,31 @@ class Robot
     end
   end
 end
+
+class Simulator
+  TRANSLATING_HASH = {'L' => :turn_left, 'R' => :turn_right, 'A' => :advance }
+  
+  def instructions(letters)
+    letters.chars.map do |letter|
+      TRANSLATING_HASH[letter]
+    end
+  end
+  
+  def place(robot, initial)
+    robot.coordinates = [initial[:x], initial[:y] ]
+    robot.bearing = initial[:direction]
+  end
+  
+  def evaluate(robot, instruction_letters)
+    instructions(instruction_letters).each do |movement|
+      robot.send(movement)
+    end
+    robot
+  end
+end
+
+# robot = Robot.new
+#     simulator.place(robot, x: -2, y: 1, direction: :east)
+#     simulator.evaluate(robot, 'RLAALAL')
+#     assert_equal [0, 2], robot.coordinates
+#     assert_equal :west, robot.bearing
