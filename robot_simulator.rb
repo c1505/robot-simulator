@@ -1,4 +1,3 @@
-require 'pry'
 class Robot
   attr_accessor :coordinates, :bearing
   
@@ -61,9 +60,3 @@ class Simulator
     robot
   end
 end
-
-# robot = Robot.new
-#     simulator.place(robot, x: -2, y: 1, direction: :east)
-#     simulator.evaluate(robot, 'RLAALAL')
-#     assert_equal [0, 2], robot.coordinates
-#     assert_equal :west, robot.bearing
